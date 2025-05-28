@@ -1,0 +1,84 @@
+
+# appearance
+theme = tokyonight-storm 
+background-opacity = 0.9
+background-blur = true
+background-blur-radius = 40
+font-family = Fira Code Regular Nerd Font
+font-size = 12
+cursor-style = block
+cursor-style-blink = false
+cursor-invert-fg-bg = true
+mouse-hide-while-typing = true
+
+
+# window controls
+confirm-close-surface = true
+window-title-font-family = VictorMono NFM Italic
+window-decoration = true
+window-padding-x = 2
+window-padding-y = 2
+window-padding-balance = true
+window-save-state = always
+title = "zufi"
+window-padding-x = 5
+window-padding-y = 5
+window-padding-balance = true
+window-decoration = false
+
+
+# auto update settings
+auto-update = download
+auto-update-channel = stable
+
+# extras
+shell-integration-features = true
+copy-on-select = false
+focus-follows-mouse = true
+link-url = true
+
+# custom keybindings
+keybind = ctrl+r=reload_config 
+keybind = ctrl+i=inspector:toggle
+keybind = ctrl+f=toggle_fullscreen
+keybind = ctrl+left=previous_tab
+keybind = ctrl+right=next_tab
+
+# quick terminal (global keybinding) 
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
+
+# tmux-like prefix controlled keybindings
+keybind = ctrl+b>x=close_surface
+keybind = ctrl+b>c=new_tab 
+keybind = ctrl+b>n=new_window
+keybind = ctrl+b>f=toggle_fullscreen
+
+# tab navigation
+keybind = ctrl+b>1=goto_tab:1
+keybind = ctrl+b>2=goto_tab:2
+keybind = ctrl+b>3=goto_tab:3
+keybind = ctrl+b>4=goto_tab:4
+keybind = ctrl+b>5=goto_tab:5
+keybind = ctrl+b>6=goto_tab:6
+keybind = ctrl+b>7=goto_tab:7
+keybind = ctrl+b>8=goto_tab:8
+keybind = ctrl+b>9=goto_tab:9
+
+# splits
+keybind = ctrl+b>\=new_split:right
+keybind = ctrl+b>-=new_split:down
+keybind = ctrl+b>e=equalize_splits
+keybind = ctrl+b>z=toggle_split_zoom
+
+# split navigation 
+keybind = ctrl+b>h=goto_split:left
+keybind = ctrl+b>j=goto_split:bottom
+keybind = ctrl+b>k=goto_split:top
+keybind = ctrl+b>l=goto_split:right
+keybind = ctrl+b>left=goto_split:left
+keybind = ctrl+b>down=goto_split:bottom
+keybind = ctrl+b>up=goto_split:top
+keybind = ctrl+b>right=goto_split:right
+
+#full screen
+keybind = f11=toggle_fullscreen
