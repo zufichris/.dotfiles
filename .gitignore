@@ -1,0 +1,83 @@
+# =======================
+# 💻 System Trash
+# =======================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
+*.bak
+*.tmp
+*.old
+*.orig
+*.log
+
+# =======================
+# 🐚 Shell Junk
+# =======================
+.zsh_history
+.bash_history
+.fish_history
+.zcompdump*
+.zsh_sessions
+
+# =======================
+# 🔐 Secrets & Env Vars
+# =======================
+.env
+.env.*
+*.key
+*.pem
+*.crt
+*.asc
+.gnupg
+*.gpg
+*.secrets
+.secrets/
+
+# =======================
+# 📦 Package/File Managers
+# =======================
+node_modules/
+__pycache__/
+*.pyc
+.cache/
+.npm/
+.yarn/
+.pnpm/
+.venv/
+dist/
+build/
+
+# =======================
+# 🧪 Editors & IDEs
+# =======================
+.vscode/
+.idea/
+*.code-workspace
+*.sublime*
+*.kate-swp
+.netrwhist
+*~  # editor backups
+
+# =======================
+# 🖼️ Terminal Screenshots / misc
+# =======================
+*.png
+*.jpg
+*.gif
+*.mp4
+*.svg
+*.webp
+*.pdf
+
+# =======================
+# 🔧 Dotbot temp files (if using it)
+# =======================
+install.conf.yaml.bak
+dotbot.log
+
+# =======================
+# 🗂️ Symlinks or broken files
+# =======================
+*.lnk
