@@ -5,14 +5,14 @@ return {
         dependencies = {
             "rafamadriz/friendly-snippets",
         },
-        event = "InsertEnter",
-        version = "*",
+        -- event = "InsertEnter",
+        version = "v1.*",          -- Use stable version instead of "*"
+        build = "cargo build --release", -- Build from source if needed
         config = function()
             vim.cmd("highlight Pmenu guibg=none")
             vim.cmd("highlight PmenuExtra guibg=none")
             vim.cmd("highlight FloatBorder guibg=none")
             vim.cmd("highlight NormalFloat guibg=none")
-
             require("blink.cmp").setup({
                 snippets = { preset = "luasnip" },
                 signature = { enabled = true },
@@ -33,6 +33,13 @@ return {
                 },
                 keymap = {
                     ["<C-f>"] = {},
+                    -- Add completion keymaps here
+                    ["<CR>"] = { "accept", "fallback" },
+                    ["<Tab>"] = { "accept", "fallback" },
+                    ["<C-y>"] = { "accept" }, -- Alternative accept key
+                    ["<C-e>"] = { "cancel" }, -- Cancel completion
+                    ["<C-n>"] = { "select_next", "fallback" },
+                    ["<C-p>"] = { "select_prev", "fallback" },
                 },
                 cmdline = {
                     enabled = false,
@@ -66,8 +73,10 @@ return {
                     },
                 },
             })
-
             require("luasnip.loaders.from_vscode").lazy_load()
         end,
+    },
+    opts = {
+        iifuzzy = { implementation = "prefer_rust_with_warning" },
     },
 }
