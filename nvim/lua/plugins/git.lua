@@ -5,6 +5,11 @@ return {
             on_attach = function(bufnr)
                 local gitsigns = require("gitsigns")
 
+                -- Creates a buffer-local key mapping for the specified mode and key combination.
+                -- @param mode The mode(s) in which the mapping applies (e.g., "n" for normal, "v" for visual).
+                -- @param l The left-hand side key sequence to map.
+                -- @param r The right-hand side action or command to execute.
+                -- @param opts Optional table of additional mapping options.
                 local function map(mode, l, r, opts)
                     opts = opts or {}
                     opts.buffer = bufnr
