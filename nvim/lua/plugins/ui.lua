@@ -1,3 +1,6 @@
+-- Returns a table of custom highlight group overrides for the Gruvbox colorscheme.
+-- These overrides define specific styles or link highlight groups for various UI elements,
+-- plugin integrations, and Treesitter syntax groups to enhance Neovim's appearance.
 local function override_highlights()
     local colors = require("gruvbox").palette
     return {
@@ -68,6 +71,7 @@ return {
         config = function()
             local transparent = false
 
+            -- Applies the Gruvbox colorscheme with custom highlight overrides and the current transparency setting.
             local function apply()
                 require("gruvbox").setup({
                     terminal_colors = true,

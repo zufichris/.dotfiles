@@ -65,7 +65,11 @@ return {
                 ---@param client vim.lsp.Client
                 ---@param method vim.lsp.protocol.Method
                 ---@param bufnr? integer some lsp support methods only in specific files
-                ---@return boolean
+                -- Determines if the given LSP client supports a specific method for the specified buffer, handling compatibility between Neovim 0.10 and 0.11.
+                -- @param client The LSP client instance.
+                -- @param method The LSP method name to check (e.g., "textDocument/documentHighlight").
+                -- @param bufnr The buffer number to check support for.
+                -- @return True if the client supports the method for the buffer, false otherwise.
                 local function client_supports_method(client, method, bufnr)
                     if vim.fn.has("nvim-0.11") == 1 then
                         return client:supports_method(method, bufnr)

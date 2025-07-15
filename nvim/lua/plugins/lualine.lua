@@ -1,3 +1,5 @@
+-- Returns a formatted string for the status line showing either active LSP progress messages or the names of connected LSP clients.
+-- If there are ongoing LSP progress messages, they are displayed prefixed by an LSP icon; otherwise, the names of active LSP clients are shown in brackets with the same prefix.
 local function lsp_clients()
     return require("lsp-progress").progress({
         format = function(messages)
