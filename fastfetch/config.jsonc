@@ -1,0 +1,196 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "auto",
+        "width": 65,
+        "height": 35,
+        "padding": {
+            "top": 0,
+            "left": 0,
+            "right": 4,
+        },
+        "color": {
+            "1": "dim_white",
+            "2": "bright_yellow",
+        },
+    },
+    "display": {
+        "separator": " ",
+        "color": {
+            "keys": "bright_yellow",
+            "title": "bright_red",
+            "separator": "dim_white",
+        },
+    },
+    "modules": [
+        {
+            "type": "title",
+            "color": {
+                "user": "bright_green",
+                "at": "dim_white",
+                "host": "bright_blue",
+            },
+        },
+        {
+            "type": "separator",
+            "string": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            "color": "yellow",
+        },
+        {
+            "type": "os",
+            "key": "OS",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "host",
+            "key": "Host",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "kernel",
+            "key": "Kernel",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "uptime",
+            "key": "Uptime",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "packages",
+            "key": "Packages",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "shell",
+            "key": "Shell",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "display",
+            "key": "Display",
+            "keyColor": "bright_yellow",
+            "compactType": "original",
+        },
+        {
+            "type": "de",
+            "key": "DE",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "wm",
+            "key": "WM",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "wmtheme",
+            "key": "WM Theme",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "theme",
+            "key": "Theme",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "icons",
+            "key": "Icons",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "cursor",
+            "key": "Cursor",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "terminal",
+            "key": "Terminal",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "terminalfont",
+            "key": "Font",
+            "keyColor": "bright_yellow",
+        },
+        {
+            "type": "separator",
+            "string": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            "color": "yellow",
+        },
+        {
+            "type": "cpu",
+            "key": "CPU",
+            "keyColor": "bright_red",
+            "temp": true,
+        },
+        {
+            "type": "gpu",
+            "key": "GPU",
+            "keyColor": "bright_red",
+            "temp": true,
+        },
+        {
+            "type": "memory",
+            "key": "Memory",
+            "keyColor": "bright_green",
+        },
+        {
+            "type": "swap",
+            "key": "Swap",
+            "keyColor": "bright_green",
+        },
+        {
+            "type": "disk",
+            "key": "Disk (/)",
+            "keyColor": "bright_blue",
+            "folders": [
+                "/"
+            ],
+        },
+        {
+            "type": "separator",
+            "string": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            "color": "yellow",
+        },
+        {
+            "type": "localip",
+            "key": "Local IP",
+            "keyColor": "bright_cyan",
+            "compact": true,
+        },
+        {
+            "type": "publicip",
+            "key": "Public IP",
+            "keyColor": "bright_cyan",
+            "timeout": 2000,
+        },
+        {
+            "type": "wifi",
+            "key": "WiFi",
+            "keyColor": "bright_cyan",
+        },
+        {
+            "type": "battery",
+            "key": "Battery",
+            "keyColor": "bright_magenta",
+        },
+        {
+            "type": "poweradapter",
+            "key": "Power",
+            "keyColor": "bright_magenta",
+        },
+        {
+            "type": "locale",
+            "key": "Locale",
+            "keyColor": "dim_white",
+        },
+        {
+            "type": "break",
+        },
+        {
+            "type": "colors",
+            "symbol": "circle",
+            "paddingLeft": 2,
+        },
+    ],
+}
