@@ -106,8 +106,4 @@ return {
             vim.keymap.set("n", "<leader>bt", "<cmd>Togglebg<CR>", { desc = "Toggle Gruvbox Background" })
         end,
     },
-    {
-        "norcalli/nvim-colorizer.lua",
-        opts = {},
-    },
 }
