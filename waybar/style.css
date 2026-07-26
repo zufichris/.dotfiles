@@ -1,0 +1,56 @@
+@import "tokens/colors.css";
+@import "tokens/state.css";
+@import "tokens/workspace.css";
+@import "tokens/widget.css";
+@import "tokens/batt-clock.css";
+@import "tokens/slider.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  min-height: 0px;
+  border: none;
+  border-radius: 0;
+  font-family: Cantarell, Inter, "Adwaita Sans", "JetBrainsMono Nerd Font";
+  font-weight: bold;
+}
+
+window#waybar {
+  background: transparent;
+}
+
+#distro-group,
+#power-profiles-daemon,
+#idle_inhibitor,
+#audio,
+#connections,
+#system,
+#storage,
+#custom-power,
+#tray-group,
+#workspaces,
+#battery,
+#clock {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes blink {
+  to {
+    color: @error;
+  }
+}

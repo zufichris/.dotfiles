@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily rotation of zufi-sddm background
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target

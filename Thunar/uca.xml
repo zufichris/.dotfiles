@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open kitty here</name>
+	<submenu></submenu>
+	<unique-id>1784650000000001-1</unique-id>
+	<command>kitty --directory %f</command>
+	<description>Open a terminal in this folder</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>preferences-desktop-wallpaper</icon>
+	<name>Set as wallpaper</name>
+	<submenu></submenu>
+	<unique-id>1784650000000002-1</unique-id>
+	<command>wpaperctl set-wallpaper %f</command>
+	<description>Set image as wallpaper; colors re-theme automatically</description>
+	<range></range>
+	<patterns>*.jpg;*.jpeg;*.png;*.webp</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon>checkbox</icon>
+	<name>Check sha256sum</name>
+	<submenu></submenu>
+	<unique-id>1577688162350307-1</unique-id>
+	<command>yad --info --title=&quot;Check sha256 for %n&quot; --text=&quot;$(sha256sum %f)&quot;</command>
+	<description>Check sha256sum</description>
+	<range></range>
+	<patterns>*.iso;*.ISO</patterns>
+	<other-files/>
+</action>
+</actions>

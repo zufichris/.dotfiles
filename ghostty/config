@@ -1,0 +1,39 @@
+theme = gruvbox
+window-theme = system
+background-opacity = 0.9
+
+window-padding-x = 2
+window-padding-y = 5
+window-padding-balance = true
+window-save-state = always
+
+# Cursor & Input
+cursor-style = block
+cursor-style-blink = false
+mouse-hide-while-typing = false
+
+# Clipboard & Selection
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = clipboard
+clipboard-paste-protection = false
+confirm-close-surface = false
+
+# Font Configuration
+font-family = "Fira Code"
+font-style = "Regular"
+font-family-bold = "Fira Code"
+font-style-bold = "Bold"
+font-family-italic = "Fira Code"
+font-style-italic = "Italic"
+font-family-bold-italic = "Fira Code"
+font-style-bold-italic = "Bold Italic"
+
+font-family = "GeistMono Nerd Font"
+
+font-size = 16
+font-thicken = false
+
+selection-invert-fg-bg = true
+keybind = shift+enter=text:\n
+

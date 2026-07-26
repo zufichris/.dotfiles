@@ -1,0 +1,13 @@
+[SddmGreeterTheme]
+Name=zufi-sddm
+Description=Custom SDDM theme with video and GIF background support
+Author=zufi
+Website=
+License=MIT
+Type=sddm-theme
+Version=1.0
+ConfigFile=theme.conf
+MainScript=src/Main.qml
+Theme-Id=zufi-sddm
+Theme-API=2.0
+QtVersion=6

@@ -1,0 +1,179 @@
+@theme "/dev/null"
+@import "colors.rasi"
+
+configuration {
+    modi:                "drun,run,window,filebrowser";
+    font:                "Adwaita Sans 12";
+    show-icons:          true;
+    icon-theme:          "Papirus-Dark";
+    drun-display-format: "{name}";
+
+    display-drun:        "󰀻  Apps";
+    display-run:         "  Run";
+    display-window:      "󰕰  Windows";
+    display-filebrowser: "  Files";
+
+    hover-select:        true;
+    me-select-entry:     "";
+    me-accept-entry:     "MousePrimary";
+
+    matching:            "fuzzy";
+    sort:                true;
+    sorting-method:      "fzf";
+}
+
+window {
+    transparency:     "real";
+    location:         center;
+    anchor:           center;
+    width:            980px;
+    border:           2px;
+    border-color:     @border-col;
+    border-radius:    30px;
+    background-color: @glass;
+    cursor:           "default";
+}
+
+mainbox {
+    orientation:      horizontal;
+    spacing:          0px;
+    background-color: transparent;
+    children:         [ "imagebox", "listbox" ];
+}
+
+imagebox {
+    orientation:      vertical;
+    padding:          18px;
+    spacing:          18px;
+    background-color: transparent;
+    background-image: url("~/.cache/current_wallpaper", height);
+    children:         [ "inputbar", "dummy", "mode-switcher" ];
+}
+
+dummy {
+    background-color: transparent;
+}
+
+inputbar {
+    spacing:          10px;
+    padding:          14px;
+    border-radius:    14px;
+    background-color: rgba(0, 0, 0, 45%);
+    text-color:       @on-surface;
+    children:         [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    expand:           false;
+    str:              "";
+    background-color: transparent;
+    text-color:       @primary;
+}
+
+entry {
+    background-color:  transparent;
+    text-color:        @on-surface;
+    cursor:            text;
+    placeholder:       "Search";
+    placeholder-color: @muted;
+}
+
+mode-switcher {
+    spacing:          12px;
+    background-color: transparent;
+}
+
+button {
+    padding:          12px;
+    border-radius:    14px;
+    background-color: rgba(0, 0, 0, 45%);
+    text-color:       @muted;
+    cursor:           pointer;
+}
+
+button selected {
+    background-color: @sel-bg;
+    text-color:       #ffffff;
+}
+
+listbox {
+    orientation:      vertical;
+    padding:          18px;
+    spacing:          12px;
+    background-color: transparent;
+    children:         [ "message", "listview" ];
+}
+
+listview {
+    columns:          1;
+    lines:            8;
+    cycle:            true;
+    dynamic:          true;
+    scrollbar:        false;
+    spacing:          6px;
+    background-color: transparent;
+}
+
+element {
+    spacing:          14px;
+    padding:          9px 12px;
+    border-radius:    12px;
+    background-color: transparent;
+    text-color:       @on-surface;
+    cursor:           pointer;
+}
+
+element selected.normal {
+    background-color: @sel-bg;
+    text-color:       #ffffff;
+}
+
+element normal.urgent,
+element selected.urgent {
+    background-color: @error;
+    text-color:       @on-surface;
+}
+
+element normal.active {
+    text-color:       @tertiary;
+}
+
+element selected.active {
+    background-color: @sel-bg;
+    text-color:       #ffffff;
+}
+
+element-icon {
+    size:             36px;
+    background-color: transparent;
+    cursor:           inherit;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+    cursor:           inherit;
+}
+
+element-text highlight {
+    text-color:       @tertiary;
+}
+
+message {
+    background-color: transparent;
+}
+
+textbox {
+    padding:          10px;
+    border-radius:    10px;
+    background-color: @glass;
+    text-color:       @on-surface;
+}
+
+error-message {
+    padding:          14px;
+    border-radius:    12px;
+    background-color: @glass;
+    text-color:       @on-surface;
+}

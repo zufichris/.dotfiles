@@ -1,0 +1,35 @@
+@import "colors.css";
+
+#custom-tray-arrow.inhibited-none,
+#custom-tray-arrow.dnd-none,
+#battery.charging,
+#power-profiles-daemon.power-saver {
+  color: @good;
+}
+
+#idle_inhibitor.activated,
+#cpu.warning,
+#disk.warning,
+#memory.warning,
+#battery.warning:not(.charging),
+#custom-tray-arrow.notification,
+#custom-tray-arrow.dnd-notification,
+#custom-tray-arrow.inhibited-notification {
+  color: @accent3;
+}
+
+#network.disabled,
+#cpu.critical,
+#disk.critical,
+#memory.critical,
+#temperature.critical,
+#power-profiles-daemon.performance,
+#custom-tray-arrow.dnd-inhibited-none,
+#custom-tray-arrow.dnd-inhibited-notification {
+  color: @error;
+}
+
+#battery.critical:not(.charging) {
+  color: @error;
+  animation: blink 0.5s steps(12) infinite alternate;
+}

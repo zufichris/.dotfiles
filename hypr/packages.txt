@@ -1,0 +1,5 @@
+- wpaperctl, wpaperd
+- hyprpolkitagent
+- slurp, grim, wl-copyboard
+- mpv, ffmpeg, imagemagick (gif-overlay.sh: playback, thumbnails, chroma-key detection)
+

@@ -1,0 +1,8 @@
+<* for name, value in colors *>
+@define-color {{name}} {{value.default.hex}};
+<* endfor *>
+
+@define-color accent1 {{colors.primary.default.hex}};
+@define-color accent2 {{colors.primary_container.default.hex}};
+@define-color accent3 {{colors.secondary.default.hex}};
+@define-color good {{colors.tertiary.default.hex}};

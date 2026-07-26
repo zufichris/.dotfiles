@@ -1,0 +1,29 @@
+@import "colors.css";
+
+#pulseaudio-slider {
+  margin: 4px 5px;
+  padding: 0 2px;
+  background-color: transparent;
+  border-radius: 15px;
+}
+
+#pulseaudio-slider trough {
+  min-height: 10px;
+  min-width: 80px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+#pulseaudio-slider highlight {
+  min-height: 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+#pulseaudio-slider slider {
+  min-height: 12px;
+  min-width: 12px;
+  margin: -2px 0;
+  border-radius: 100%;
+  background-color: @accent1;
+}

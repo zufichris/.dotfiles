@@ -1,0 +1,17 @@
+* {
+    surface:           #0d121e;
+    surface-container: #151d30;
+    surface-bright:    #1b263f;
+    primary:           #ffb0c8;
+    on-primary:        #650033;
+    on-surface:        #f3dde2;
+    muted:             #ddbfc6;
+    outline:           #a58a91;
+    tertiary:          #8a77cd;
+    error:             #ffb4ab;
+
+    sel-bg:            #ffb0c880;
+    border-col:        #ffb0c866;
+    glass:             #ffffff1a;
+    glass-bright:      #ffffff40;
+}

@@ -1,0 +1,10 @@
+[Unit]
+Description=Rotate zufi-sddm background
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash /usr/share/sddm/themes/zufi-sddm/scripts/rotate-background.sh
+
+[Install]
+WantedBy=display-manager.service

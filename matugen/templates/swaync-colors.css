@@ -1,0 +1,38 @@
+* {
+  --bg-panel: alpha({{colors.surface.default.hex}}, 0.88);
+  --bg-widget: alpha({{colors.surface_container.default.hex}}, 0.9);
+
+  --bg-tile: alpha({{colors.surface_container.default.hex}}, 0.92);
+  --bg-tile-hover: alpha({{colors.surface_container_high.default.hex}}, 0.95);
+
+  --bg-critical: alpha({{colors.error.default.hex}}, 0.25);
+  --bg-critical-hover: alpha({{colors.error.default.hex}}, 0.4);
+
+  --border-critical: alpha({{colors.error.default.hex}}, 0.65);
+  --shadow-critical: alpha({{colors.error.default.hex}}, 0.35);
+
+  --btn-on: {{colors.primary.default.hex}};
+  --btn-off: rgba(255, 255, 255, 0.45);
+
+  --accent: {{colors.primary.default.hex}};
+  --accent-dim: alpha({{colors.primary.default.hex}}, 0.22);
+  --accent-hover: alpha({{colors.primary.default.hex}}, 0.45);
+  --hover-dim: alpha({{colors.surface_container_high.default.hex}}, 0.9);
+
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-glass: rgba(255, 255, 255, 0.22);
+
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+
+  --text-dim: rgba(255, 255, 255, 0.55);
+  --text-hover: #ffffff;
+
+  --radius-panel: 30px;
+  --radius-widget: 12px;
+  --radius-tile: 15px;
+  --radius-btn: 10px;
+
+  --t-fast: 150ms ease;
+  --t-mid: 220ms ease;
+}

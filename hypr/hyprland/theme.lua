@@ -1,0 +1,18 @@
+return {
+	background = "#0d121e",
+	background_alt = "#121a2a",
+	background_base = "#0d121e",
+	surface_low = "#151d30",
+	surface_mid = "#1b263f",
+	surface_high = "#22304e",
+	text_primary = "#f3dde2",
+	text_secondary = "#ddbfc6",
+	text_muted = "#a58a91",
+	accent = "#ffb0c8",
+	red = "#ffb4ab",
+	green = "#80d000",
+	yellow = "#c0e000",
+	blue = "#4040a0",
+	teal = "#8a77cd",
+	shadow = "#000000",
+}

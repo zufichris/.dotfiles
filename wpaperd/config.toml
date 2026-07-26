@@ -1,0 +1,7 @@
+[default]
+duration = "1h"
+mode = "center"
+sorting = "ascending"
+
+[any]
+path = "~/Pictures/wallpapers"

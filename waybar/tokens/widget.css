@@ -1,0 +1,125 @@
+@import "colors.css";
+
+#distro-group {
+  margin: 4px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#distro-group:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+#custom-distro {
+  color: @accent1;
+  padding: 6px 15px 6px 10px;
+}
+
+#custom-terminal,
+#custom-code,
+#custom-office,
+#custom-obsidian,
+#custom-spotify {
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0px 10px;
+}
+
+#custom-files {
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0px 10px 0px 8px;
+}
+
+#custom-browser {
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0px 15px 0px 10px;
+}
+
+#power-profiles-daemon,
+#idle_inhibitor {
+  margin: 4px 5px;
+  padding: 6px 15px 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#power-profiles-daemon:hover,
+#idle_inhibitor:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+#audio,
+#connections,
+#system,
+#storage {
+  margin: 4px 5px;
+  padding: 6px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#audio:hover,
+#connections:hover,
+#system:hover,
+#storage:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+#disk,
+#memory,
+#cpu,
+#temperature,
+#bluetooth {
+  margin-right: 2px;
+  padding: 0 8px;
+}
+
+#network {
+  padding: 0px 10px 0px 4px;
+}
+
+#pulseaudio {
+  margin-right: 12px;
+  margin-left: 8px;
+}
+
+#custom-power {
+  margin: 4px 12px 4px 5px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  color: @accent1;
+  min-width: 22px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#custom-power:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+#tray-group {
+  margin: 4px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+}
+
+#custom-tray-arrow {
+  padding: 6px 14px 6px 10px;
+  color: @accent1;
+}
+
+#tray {
+  padding: 6px 10px;
+}
+
+#tray>.passive,
+#tray>.active,
+#tray>.needs-attention {
+  -gtk-icon-effect: none;
+}

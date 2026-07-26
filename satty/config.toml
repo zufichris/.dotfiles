@@ -1,0 +1,13 @@
+[general]
+early-exit = true
+initial-tool = "brush"
+copy-command = "wl-copy"
+output-filename = "~/Pictures/screenshots/Screenshot-%Y-%m-%d_%H:%M:%S.png"
+save-after-copy = false
+actions-on-enter = ["save-to-file"]
+actions-on-escape = ["exit"]
+corner-roundness = 12
+
+[font]
+family = "Adwaita Sans"
+style = "Bold"

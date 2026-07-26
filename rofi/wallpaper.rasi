@@ -1,0 +1,97 @@
+configuration {
+    show-icons:      true;
+    hover-select:    true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+    matching:        "fuzzy";
+    case-sensitive:  false;
+}
+
+@import "colors.rasi"
+
+* {
+    font:           "Adwaita Sans 12";
+    bg:             @glass;
+    bg-element:     transparent;
+    bg-selected:    @sel-bg;
+    fg:             @on-surface;
+    fg-muted:       @muted;
+    fg-selected:    #ffffff;
+    border-win:     @border-col;
+    fg-prompt:      @primary;
+}
+
+window {
+    transparency:     "real";
+    location:         center;
+    anchor:           center;
+    width:            1000px;
+    background-color: @bg;
+    border:           2px;
+    border-color:     @border-win;
+    border-radius:    30px;
+}
+
+mainbox {
+    orientation:      vertical;
+    background-color: transparent;
+    children:         [ "inputbar", "listview" ];
+}
+
+inputbar {
+    padding:          20px 20px 10px 20px;
+    background-color: transparent;
+    children:         [ "prompt", "entry" ];
+}
+
+prompt {
+    background-color: transparent;
+    text-color:       @fg-prompt;
+}
+
+entry {
+    background-color:  transparent;
+    text-color:        @fg;
+    placeholder:       "Search wallpapers...";
+    placeholder-color: @fg-muted;
+    padding:           0 10px;
+}
+
+listview {
+    background-color: transparent;
+    columns:          3;
+    lines:            2;
+    spacing:          8px;
+    padding:          6px 14px 14px 14px;
+    fixed-columns:    true;
+    cycle:            false;
+}
+
+element {
+    orientation:      vertical;
+    padding:          4px;
+    border-radius:    16px;
+    spacing:          4px;
+    background-color: @bg-element;
+    children:         [ element-icon, element-text ];
+}
+
+element selected {
+    background-color: @bg-selected;
+}
+
+element-icon {
+    background-color: transparent;
+    size:             260px;
+    horizontal-align: 0.5;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       @fg-muted;
+    horizontal-align: 0.5;
+}
+
+element selected element-text {
+    text-color: @fg-selected;
+}

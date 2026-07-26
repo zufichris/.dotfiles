@@ -1,0 +1,38 @@
+* {
+  --bg-panel: alpha(#0d121e, 0.88);
+  --bg-widget: alpha(#151d30, 0.9);
+
+  --bg-tile: alpha(#151d30, 0.92);
+  --bg-tile-hover: alpha(#1b263f, 0.95);
+
+  --bg-critical: alpha(#ffb4ab, 0.25);
+  --bg-critical-hover: alpha(#ffb4ab, 0.4);
+
+  --border-critical: alpha(#ffb4ab, 0.65);
+  --shadow-critical: alpha(#ffb4ab, 0.35);
+
+  --btn-on: #ffb0c8;
+  --btn-off: rgba(255, 255, 255, 0.45);
+
+  --accent: #ffb0c8;
+  --accent-dim: alpha(#ffb0c8, 0.22);
+  --accent-hover: alpha(#ffb0c8, 0.45);
+  --hover-dim: alpha(#1b263f, 0.9);
+
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-glass: rgba(255, 255, 255, 0.22);
+
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+
+  --text-dim: rgba(255, 255, 255, 0.55);
+  --text-hover: #ffffff;
+
+  --radius-panel: 30px;
+  --radius-widget: 12px;
+  --radius-tile: 15px;
+  --radius-btn: 10px;
+
+  --t-fast: 150ms ease;
+  --t-mid: 220ms ease;
+}

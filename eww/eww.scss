@@ -1,0 +1,381 @@
+@import "_colors";
+
+// ── Design tokens (mirror of swaync tokens/variables.css) ──
+// Radii: panel 30 (rofi/swaync), card 15 (waybar pills/swaync tiles),
+// widget 12, button 10
+$radius-panel: 30px;
+$radius-card: 15px;
+$radius-widget: 12px;
+$radius-btn: 10px;
+
+$border-faint: 1px solid rgba(255, 255, 255, 0.08);
+$border-subtle: 1px solid rgba(255, 255, 255, 0.12);
+$border-glass: 1px solid rgba(255, 255, 255, 0.22);
+
+// Compositor blur carries the glass; fills must stay above the
+// ignore_alpha 0.05 floor (hypr rules.lua blur-eww)
+$glass-root-a: rgba($surface, 0.5);
+$glass-root-b: rgba($surface, 0.38);
+$glass-card: rgba(255, 255, 255, 0.06);
+$glass-tile: rgba(255, 255, 255, 0.05);
+$hover-fill: rgba($surface-container-high, 0.9);
+
+$text-body: rgba(255, 255, 255, 0.85);
+$text-dim: rgba(255, 255, 255, 0.55);
+$text-faint: rgba(255, 255, 255, 0.3);
+
+$track-interactive: rgba(255, 255, 255, 0.15);
+$track-meter: rgba(255, 255, 255, 0.08);
+
+$shadow-rest: 0 2px 12px rgba(0, 0, 0, 0.28);
+$shadow-raised: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+$t-fast: 150ms ease;
+$t-mid: 220ms ease;
+
+* {
+  all: unset;
+  font-family: Cantarell, Inter, "Adwaita Sans", "JetBrainsMono Nerd Font";
+}
+
+// no shadow on the root: it fills the layer surface, a shadow would clip
+.dash-root {
+  background: linear-gradient(160deg, $glass-root-a 0%, $glass-root-b 100%);
+  border: $border-glass;
+  border-radius: $radius-panel;
+  padding: 14px;
+  color: #ffffff;
+}
+
+.card {
+  background-color: $glass-card;
+  border: $border-subtle;
+  border-radius: $radius-card;
+  padding: 14px 16px;
+  box-shadow: $shadow-rest;
+}
+
+.card-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: $text-dim;
+}
+
+.card-date {
+  font-size: 11px;
+  color: $text-dim;
+}
+
+.greet-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: $on-surface;
+}
+
+.greet-sub {
+  font-size: 12px;
+  color: $text-dim;
+}
+
+.time {
+  font-size: 38px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.date {
+  font-size: 13px;
+  color: $text-dim;
+}
+
+.toggle {
+  min-width: 54px;
+  min-height: 34px;
+  font-size: 16px;
+  border-radius: $radius-widget;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: $border-subtle;
+  color: $text-dim;
+  transition: all $t-fast;
+}
+
+.toggle:hover {
+  background-color: $hover-fill;
+  border: $border-glass;
+  color: #ffffff;
+}
+
+.toggle.on {
+  background-color: $primary;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: $on-primary;
+}
+
+.toggle.on:hover {
+  background-color: $primary-container;
+  color: #ffffff;
+}
+
+.slider-icon {
+  font-size: 15px;
+  color: $text-dim;
+}
+
+.slider trough,
+.seek trough {
+  background-color: $track-interactive;
+  border-radius: 6px;
+  min-height: 6px;
+}
+
+.slider trough highlight,
+.seek trough highlight {
+  background-color: $primary;
+  border-radius: 6px;
+}
+
+.slider trough fill,
+.seek trough fill {
+  background-color: transparent;
+}
+
+.slider trough slider,
+.seek trough slider {
+  background-color: #ffffff;
+  border-radius: 100%;
+  min-width: 14px;
+  min-height: 14px;
+  box-shadow: 0 0 8px rgba($primary, 0.22);
+  transition: box-shadow $t-fast;
+}
+
+.slider trough slider:hover,
+.seek trough slider:hover {
+  box-shadow: 0 0 14px rgba($primary, 0.45);
+}
+
+// GtkCalendar is one CSS node: compound classes (.cal.header), not
+// descendants; per-cell padding is not stylable
+.cal {
+  background-color: transparent;
+  border: none;
+  font-size: 12px;
+  color: $text-body;
+  padding: 4px 0 0 0;
+}
+
+.cal.header {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.cal.button {
+  color: $text-dim;
+  transition: color $t-fast;
+}
+
+.cal.button:hover {
+  color: $primary;
+}
+
+.cal.highlight {
+  color: $text-dim;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.cal:selected {
+  color: $on-primary;
+  background-color: $primary;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.cal:indeterminate {
+  color: $text-faint;
+}
+
+.pomo-track {
+  color: $track-meter;
+  background-color: transparent;
+}
+
+.pomo-ring {
+  color: $primary;
+  background-color: transparent;
+}
+
+.pomo-ring.break {
+  color: $tertiary;
+}
+
+.pomo-time {
+  font-size: 34px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pomo-sub {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: $text-dim;
+}
+
+.pomo-sub.break {
+  color: rgba($tertiary, 0.9);
+}
+
+.btn-primary {
+  background-color: $primary;
+  color: $on-primary;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 26px;
+  border-radius: $radius-btn;
+  box-shadow: $shadow-rest;
+  transition: all $t-fast;
+}
+
+.btn-primary:hover {
+  background-color: $primary-container;
+  color: #ffffff;
+  box-shadow: $shadow-raised;
+}
+
+.btn-ghost {
+  color: $text-dim;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: $radius-btn;
+  border: 1px solid transparent;
+  transition: all $t-fast;
+}
+
+.btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: $border-subtle;
+  color: #ffffff;
+}
+
+.sys-label {
+  font-size: 13px;
+  color: $text-body;
+}
+
+.sys-value {
+  font-size: 12px;
+  color: $text-dim;
+}
+
+.sys-bar trough {
+  background-color: $track-meter;
+  border-radius: 6px;
+  min-height: 6px;
+}
+
+.sys-bar trough progress {
+  background-color: $primary;
+  border-radius: 6px;
+  min-height: 6px;
+}
+
+.weather-icon {
+  font-size: 42px;
+  color: $primary;
+}
+
+.weather-temp {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.weather-desc {
+  font-size: 12px;
+  color: $text-dim;
+}
+
+.weather-meta {
+  font-size: 12px;
+  color: $text-dim;
+}
+
+.weather-days {
+  padding: 4px 0 0 0;
+}
+
+.day {
+  background-color: $glass-tile;
+  border: $border-faint;
+  border-radius: $radius-widget;
+  padding: 8px 6px;
+}
+
+.day-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: $text-dim;
+}
+
+.day-icon {
+  font-size: 16px;
+  color: $tertiary;
+}
+
+.day-temp {
+  font-size: 11px;
+  color: $text-body;
+}
+
+.art {
+  border-radius: $radius-widget;
+}
+
+.music-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.music-artist {
+  font-size: 12px;
+  color: $text-dim;
+}
+
+.music-time {
+  font-size: 11px;
+  color: $text-dim;
+}
+
+.music-btn {
+  font-size: 17px;
+  color: $text-dim;
+  transition: all $t-fast;
+}
+
+.music-btn:hover {
+  color: #ffffff;
+}
+
+.music-btn.play {
+  font-size: 19px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 100%;
+  background-color: $primary;
+  color: $on-primary;
+  box-shadow: $shadow-rest;
+}
+
+.music-btn.play:hover {
+  background-color: $primary-container;
+  color: #ffffff;
+}
+
+.notif-count {
+  font-size: 13px;
+  color: $text-body;
+}

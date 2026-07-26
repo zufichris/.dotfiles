@@ -1,0 +1,18 @@
+return {
+	background = "{{colors.background.default.hex}}",
+	background_alt = "{{colors.surface_container_low.default.hex}}",
+	background_base = "{{colors.surface.default.hex}}",
+	surface_low = "{{colors.surface_container.default.hex}}",
+	surface_mid = "{{colors.surface_container_high.default.hex}}",
+	surface_high = "{{colors.surface_container_highest.default.hex}}",
+	text_primary = "{{colors.on_surface.default.hex}}",
+	text_secondary = "{{colors.on_surface_variant.default.hex}}",
+	text_muted = "{{colors.outline.default.hex}}",
+	accent = "{{colors.primary.default.hex}}",
+	red = "{{colors.error.default.hex}}",
+	green = "#80d000",
+	yellow = "#c0e000",
+	blue = "#4040a0",
+	teal = "{{colors.tertiary.default.hex}}",
+	shadow = "{{colors.shadow.default.hex}}",
+}

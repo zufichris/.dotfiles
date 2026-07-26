@@ -1,0 +1,36 @@
+{
+    "label" : "lock",
+    "text" : "Lock",
+    "action" : "~/.config/hypr/scripts/lock.sh",
+    "keybind" : "l"
+}
+{
+    "label" : "logout",
+    "text" : "Logout",
+    "action" : "hyprctl eval 'hl.dispatch(hl.dsp.exit())'",
+    "keybind" : "e"
+}
+{
+    "label" : "hibernate",
+    "text" : "Hibernate",
+    "action" : "systemctl hibernate",
+    "keybind" : "h"
+}
+{
+    "label" : "suspend",
+    "text" : "Sleep",
+    "action" : "~/.config/hypr/scripts/lock.sh & sleep 0.5 && systemctl suspend",
+    "keybind" : "s"
+}
+{
+    "label" : "reboot",
+    "text" : "Restart",
+    "action" : "systemctl reboot",
+    "keybind" : "r"
+}
+{
+    "label" : "shutdown",
+    "text" : "Power off",
+    "action" : "systemctl poweroff",
+    "keybind" : "p"
+}

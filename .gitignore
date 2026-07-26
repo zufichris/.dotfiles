@@ -81,3 +81,10 @@ dotbot.log
 # 🗂️ Symlinks or broken files
 # =======================
 *.lnk
+ref/
+# video-background symlinks created by sddm/preview.sh (install.sh creates
+# them in the installed theme; the repo only tracks the fallback image)
+sddm/backgrounds/*.mp4
+sddm/backgrounds/*.webm
+sddm/backgrounds/*.mkv
+sddm/backgrounds/*.mov

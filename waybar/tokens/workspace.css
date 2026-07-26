@@ -1,0 +1,57 @@
+@import "colors.css";
+
+#workspaces {
+  margin: 4px 5px;
+  padding: 6px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+}
+
+#workspaces button {
+  min-width: 32px;
+  padding: 0 4px;
+  margin: 0 2px;
+  background: transparent;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#workspaces button.active {
+  padding: 0 12px;
+  margin: 0 2px;
+  background-image: linear-gradient(45deg, @accent1, @accent2, @accent3);
+  background-size: 300% 300%;
+  animation: gradient 6s ease infinite;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+#workspaces button.special {
+  color: @accent2;
+}
+
+#workspaces button:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+#workspaces button.active:hover {
+  color: #ffffff;
+}
+
+#workspaces button.empty {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+#workspaces button.urgent {
+  color: @error;
+}
+
+#workspaces button label:first-child {
+  margin-right: 8px;
+}
+
+#workspaces button label:last-child {
+  margin-left: 2px;
+}

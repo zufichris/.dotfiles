@@ -1,0 +1,4 @@
+@define-color background {{colors.surface.default.hex}};
+@define-color foreground {{colors.on_surface.default.hex}};
+@define-color accent {{colors.primary.default.hex}};
+@define-color accent-alt {{colors.primary_container.default.hex}};
