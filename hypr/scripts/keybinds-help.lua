@@ -98,6 +98,13 @@ hl = setmetatable({
 		table.insert(binds, { keys = keys, action = action })
 		return noop()
 	end,
+	-- Must be a real empty table, not the noop proxy: the proxy answers every
+	-- key (including 1, 2, 3...) so ipairs never terminates and hands the
+	-- caller a function. keybinds.lua's dashboardOpen() iterates this.
+	get_layers = function()
+		return {}
+	end,
+	on = function() end,
 }, { __index = function() return noop end })
 
 dofile(config_root .. "/hyprland/keybinds.lua")

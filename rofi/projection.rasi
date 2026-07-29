@@ -1,0 +1,56 @@
+@import "config.rasi"
+
+configuration {
+  show-icons: false;
+  matching:   "normal";
+  tokenize:   true;
+  sort:       false;
+}
+
+window {
+  width: 380px;
+}
+
+inputbar {
+  enabled: false;
+}
+
+mainbox {
+  children: [ "leftbox" ];
+}
+
+listview {
+  columns:      1;
+  lines:        4;
+  cycle:        false;
+  dynamic:      false;
+  fixed-height: true;
+  scrollbar:    false;
+  spacing:      2px;
+  padding:      4px 14px 18px 14px;
+}
+
+element {
+  orientation:   horizontal;
+  padding:       10px 14px;
+  border-radius: 10px;
+  children:      [ "element-text" ];
+}
+
+element normal.normal,
+element alternate.normal {
+  background-color: transparent;
+  text-color:       @fg;
+}
+
+element selected.normal {
+  background-color: @bg-selected;
+  text-color:       @fg-btn-active;
+}
+
+element-text {
+  background-color: transparent;
+  horizontal-align: 0.0;
+  vertical-align:   0.5;
+  text-color:       inherit;
+}

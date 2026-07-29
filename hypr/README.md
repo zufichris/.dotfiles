@@ -58,6 +58,8 @@ matugen-generated `hyprlock-colors.conf`; `hyprsunset.conf` schedules night ligh
 - `lock-nowplaying.sh` — now-playing glass card and labels for the lock screen
 - `launcher.sh` — rofi app launcher
 - `power-menu.sh` — rofi power menu (lock/logout/hibernate/sleep/restart/poweroff)
+- `projection.sh` — Win+P style display modes (extend / laptop only / second only /
+  duplicate); outputs discovered from `/sys/class/drm`, applied via `hl.monitor`
 - `screenshot.sh` — grim/slurp capture piped into satty (or swappy)
 - `record.sh` — toggle wl-screenrec screen recording
 - `keybinds-help.sh` + `keybinds-help.lua` — cheatsheet generated from `keybinds.lua`
@@ -85,5 +87,6 @@ Highlights only — `SUPER + SHIFT + H` opens a searchable cheatsheet of every b
 | `SUPER + SHIFT + S` or `Print` | Region screenshot (`SUPER + Print` full) |
 | `SUPER + SHIFT + V` | Clipboard history |
 | `SUPER + SHIFT + P` | Power menu |
+| `SUPER + CTRL + P` | Projection manager (extend / laptop / second / duplicate) |
 | `SUPER + M` | Exit Hyprland |
 | `F9` | Toggle waybar |

@@ -25,6 +25,12 @@ local programs = {
 		cmd = "~/.config/hypr/scripts/power-menu.sh",
 		keybind = "SHIFT + P",
 	},
+	-- Win+P equivalent. SUPER + P is window.pseudo() and SUPER + SHIFT + P is
+	-- the power menu, so this takes CTRL.
+	projection = {
+		cmd = "~/.config/hypr/scripts/projection.sh",
+		keybind = "CTRL + P",
+	},
 	toolbar = {
 		cmd = "killall -SIGUSR1 waybar",
 		keybind = "F9",
