@@ -22,8 +22,16 @@ if [ -n "${avatar_dir}" ] && [ -d "${avatar_dir}" ]; then
         -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \
     \) | shuf -n1 || true)"
     if [ -n "${avatar}" ]; then
-        cp -f "$avatar" "$ROOT_DIR/avatar.png"
-        echo "Rotated avatar to $(basename "$avatar")"
+        # Stage + rename: the daily timer can fire while the greeter is up, and
+        # cp truncates in place, which would hand SDDM a partial file.
+        tmp="$(mktemp "$ROOT_DIR/.avatar.XXXXXX")"
+        if cp -f "$avatar" "$tmp"; then
+            chmod 644 "$tmp"
+            mv -f "$tmp" "$ROOT_DIR/avatar.png"
+            echo "Rotated avatar to $(basename "$avatar")"
+        else
+            rm -f "$tmp"
+        fi
     fi
 fi
 

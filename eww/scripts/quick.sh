@@ -1,14 +1,28 @@
 #!/usr/bin/env bash
+# Quick-settings state. The four probes are independent and each costs
+# 15-30ms, so run them concurrently: sequential they add up to ~160ms on
+# every poll. timeouts stay, an earlier hang here stalled the whole panel.
+RT="${XDG_RUNTIME_DIR:-/tmp}"
+
 case "${1:-status}" in
 status)
+    timeout 2 nmcli radio wifi >"$RT/eww-q-wifi" 2>/dev/null &
+    timeout 2 bluetoothctl show >"$RT/eww-q-bt" 2>/dev/null &
+    timeout 2 swaync-client -D >"$RT/eww-q-dnd" 2>/dev/null &
+    timeout 2 swaync-client -c >"$RT/eww-q-n" 2>/dev/null &
+    wait
+
     wifi=false
-    [ "$(timeout 2 nmcli radio wifi 2>/dev/null)" = "enabled" ] && wifi=true
+    [ "$(cat "$RT/eww-q-wifi" 2>/dev/null)" = "enabled" ] && wifi=true
     bt=false
-    timeout 2 bluetoothctl show 2>/dev/null | grep -q "Powered: yes" && bt=true
-    dnd=$(timeout 2 swaync-client -D 2>/dev/null || echo false)
-    notifs=$(timeout 2 swaync-client -c 2>/dev/null || echo 0)
+    grep -q "Powered: yes" "$RT/eww-q-bt" 2>/dev/null && bt=true
+    dnd=$(cat "$RT/eww-q-dnd" 2>/dev/null)
+    case "$dnd" in true | false) ;; *) dnd=false ;; esac
+    notifs=$(cat "$RT/eww-q-n" 2>/dev/null)
+    case "$notifs" in '' | *[!0-9]*) notifs=0 ;; esac
     caffeine=true
     pgrep -x hypridle >/dev/null && caffeine=false
+
     jq -cn --argjson w "$wifi" --argjson b "$bt" --argjson d "$dnd" --argjson n "$notifs" --argjson c "$caffeine" \
         '{wifi: $w, bt: $b, dnd: $d, notifs: $n, caffeine: $c}'
     ;;

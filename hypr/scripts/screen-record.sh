@@ -69,5 +69,5 @@ case "${audio}" in
     ;;
 esac
 
-notify-send "Recording Started" "${mode#* } · ${audio#* } — SUPER+SHIFT+G to stop" -t 1500
+notify-send "Recording Started" "${mode#* } · ${audio#* }, SUPER+SHIFT+G to stop" -t 1500
 exec wf-recorder "${ARGS[@]}"

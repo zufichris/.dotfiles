@@ -11,12 +11,10 @@ local programs = {
 		cmd = "wl-paste --type image --watch cliphist store",
 		autostart = true,
 	},
+	-- Also starts wallpaper-watcher.sh, but only once the restore has landed;
+	-- autostarting the watcher in parallel lets it clobber the saved wallpaper.
 	wallpaper = {
 		cmd = "~/.config/hypr/scripts/wallpaper-restore.sh",
-		autostart = true,
-	},
-	wallpaperColorSync = {
-		cmd = "~/.config/hypr/scripts/wallpaper-watcher.sh",
 		autostart = true,
 	},
 	waybar = {
@@ -73,6 +71,10 @@ local programs = {
 	swayncToggle = {
 		cmd = "swaync-client -t",
 		keybind = "N",
+	},
+	notifLogger = {
+		cmd = "~/.config/eww/scripts/notif-log.sh daemon",
+		autostart = true,
 	},
 	ewwDaemon = {
 		cmd = "eww daemon",

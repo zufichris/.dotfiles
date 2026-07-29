@@ -19,7 +19,8 @@ icon_for() {
     esac
 }
 
-if ! fresh; then
+# stale-format caches (pre-hourly) regenerate too
+if ! fresh || ! jq -e 'has("hourly")' "$CACHE" >/dev/null 2>&1; then
     if raw=$(curl -sf --max-time 10 'https://wttr.in/?format=j1'); then
         cur_temp=$(jq -r '.current_condition[0].temp_C' <<<"$raw")
         cur_desc=$(jq -r '.current_condition[0].weatherDesc[0].value' <<<"$raw")
@@ -30,22 +31,45 @@ if ! fresh; then
         days="[]"
         for i in 0 1 2; do
             d_date=$(jq -r ".weather[$i].date" <<<"$raw")
-            d_temp=$(jq -r ".weather[$i].avgtempC" <<<"$raw")
+            d_hi=$(jq -r ".weather[$i].maxtempC" <<<"$raw")
+            d_lo=$(jq -r ".weather[$i].mintempC" <<<"$raw")
             d_code=$(jq -r ".weather[$i].hourly[4].weatherCode" <<<"$raw")
-            d_name=$(date -d "$d_date" '+%a')
-            days=$(jq -c --arg d "$d_name" --arg i "$(icon_for "$d_code")" --arg t "${d_temp}°" \
-                '. += [{d: $d, i: $i, t: $t}]' <<<"$days")
+            d_precip=$(jq -r "[.weather[$i].hourly[].chanceofrain | tonumber] | max" <<<"$raw")
+            if [ "$i" -eq 0 ]; then d_name="Today"; else d_name=$(date -d "$d_date" '+%a'); fi
+            days=$(jq -c --arg d "$d_name" --arg i "$(icon_for "$d_code")" \
+                --arg hi "${d_hi}°" --arg lo "${d_lo}°" --argjson p "$d_precip" \
+                '. += [{d: $d, i: $i, hi: $hi, lo: $lo, p: $p}]' <<<"$days")
+        done
+
+        # next 8 three-hour slots for the hover-expand row
+        hourly="[]"
+        count=0
+        nowh=$(date +%-H)
+        for day in 0 1; do
+            n=$(jq -r ".weather[$day].hourly | length" <<<"$raw")
+            k=0
+            while [ "$k" -lt "$n" ] && [ "$count" -lt 8 ]; do
+                t=$(jq -r ".weather[$day].hourly[$k].time" <<<"$raw")
+                h=$((t / 100))
+                if [ "$day" -eq 0 ] && [ "$h" -lt "$nowh" ]; then k=$((k + 1)); continue; fi
+                h_temp=$(jq -r ".weather[$day].hourly[$k].tempC" <<<"$raw")
+                h_code=$(jq -r ".weather[$day].hourly[$k].weatherCode" <<<"$raw")
+                hourly=$(jq -c --arg h "${h}h" --arg i "$(icon_for "$h_code")" --arg t "${h_temp}°" \
+                    '. += [{h: $h, i: $i, t: $t}]' <<<"$hourly")
+                count=$((count + 1))
+                k=$((k + 1))
+            done
         done
 
         jq -cn --arg temp "${cur_temp}°" --arg desc "$cur_desc" \
             --arg hum "${cur_hum}%" --arg wind "${cur_wind} km/h" \
-            --arg icon "$(icon_for "$cur_code")" --argjson days "$days" \
-            '{temp: $temp, desc: $desc, hum: $hum, wind: $wind, icon: $icon, days: $days}' >"$CACHE"
+            --arg icon "$(icon_for "$cur_code")" --argjson days "$days" --argjson hourly "$hourly" \
+            '{temp: $temp, desc: $desc, hum: $hum, wind: $wind, icon: $icon, days: $days, hourly: $hourly}' >"$CACHE"
     fi
 fi
 
-if [ -s "$CACHE" ]; then
+if [ -s "$CACHE" ] && jq -e 'has("hourly")' "$CACHE" >/dev/null 2>&1; then
     cat "$CACHE"
 else
-    jq -cn '{temp: "--°", desc: "Offline", hum: "--", wind: "--", icon: "󰖐", days: []}'
+    jq -cn '{temp: "--°", desc: "Offline", hum: "--", wind: "--", icon: "󰖐", days: [], hourly: []}'
 fi

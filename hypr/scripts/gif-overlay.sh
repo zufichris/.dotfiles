@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# gif-overlay.sh — float a looping gif (or any video) on top of everything.
+# gif-overlay.sh: float a looping gif (or any video) on top of everything.
 # The window rule "gif-overlay" in hyprland/rules.lua makes it float, pin,
 # and strip decorations. Move it with SUPER+LMB drag, resize with SUPER+RMB.
 #
@@ -103,7 +103,7 @@ launch_overlay() {
 	local -a vf=()
 	# crop 1px edges first (gif border pixels often miss the key color);
 	# the keyed background leaves the edges fully transparent, so no extra
-	# padding — a transparent pad renders as a black border in mpv; green/blue
+	# padding: a transparent pad renders as a black border in mpv; green/blue
 	# screens additionally get a despill pass to clean edge fringing
 	if [[ -n "$key" ]]; then
 		local r g b despill="" sim=0.12 blend=0.05
@@ -119,7 +119,7 @@ launch_overlay() {
 	# sub-pixel letterbox margins render as an opaque black right/bottom
 	# line under fractional scaling even with background=none.
 	# mpv's default bindings map the wheel to volume (pointless, audio is
-	# off) — replace them wholesale with scroll-to-zoom. mpv cannot resize
+	# off): replace them wholesale with scroll-to-zoom. mpv cannot resize
 	# its own wayland window, so the wheel shells back into this script's
 	# `zoom` subcommand which resizes through the compositor.
 	local input_conf="${XDG_CACHE_HOME:-$HOME/.cache}/gif-overlay-input.conf"

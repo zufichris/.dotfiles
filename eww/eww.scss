@@ -43,7 +43,7 @@ $t-mid: 220ms ease;
   background: linear-gradient(160deg, $glass-root-a 0%, $glass-root-b 100%);
   border: $border-glass;
   border-radius: $radius-panel;
-  padding: 14px;
+  padding: 8px;
   color: #ffffff;
 }
 
@@ -51,7 +51,7 @@ $t-mid: 220ms ease;
   background-color: $glass-card;
   border: $border-subtle;
   border-radius: $radius-card;
-  padding: 14px 16px;
+  padding: 9px 14px;
   box-shadow: $shadow-rest;
 }
 
@@ -67,31 +67,60 @@ $t-mid: 220ms ease;
   color: $text-dim;
 }
 
-.greet-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: $on-surface;
+.clock-card {
+  padding: 12px 16px 14px 16px;
 }
 
-.greet-sub {
-  font-size: 12px;
+// the greeting doubles as this card's eyebrow title
+.greet {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   color: $text-dim;
 }
 
+.uptime-chip {
+  background-color: $glass-tile;
+  border: $border-faint;
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+.uptime-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: $primary;
+}
+
+.uptime-text {
+  font-size: 10px;
+  font-weight: 600;
+  color: $text-body;
+}
+
 .time {
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 700;
   color: #ffffff;
 }
 
+.time-sep {
+  font-size: 36px;
+  font-weight: 300;
+  color: $primary;
+  padding: 0 3px;
+}
+
 .date {
-  font-size: 13px;
+  font-size: 12px;
   color: $text-dim;
+  padding: 0 2px 7px 0;
 }
 
 .toggle {
   min-width: 54px;
-  min-height: 34px;
+  min-height: 30px;
   font-size: 16px;
   border-radius: $radius-widget;
   background-color: rgba(255, 255, 255, 0.08);
@@ -160,7 +189,7 @@ $t-mid: 220ms ease;
 .cal {
   background-color: transparent;
   border: none;
-  font-size: 12px;
+  font-size: 10px;
   color: $text-body;
   padding: 4px 0 0 0;
 }
@@ -211,7 +240,7 @@ $t-mid: 220ms ease;
 }
 
 .pomo-time {
-  font-size: 34px;
+  font-size: 24px;
   font-weight: 700;
   color: #ffffff;
 }
@@ -232,7 +261,7 @@ $t-mid: 220ms ease;
   color: $on-primary;
   font-size: 12px;
   font-weight: 600;
-  padding: 8px 26px;
+  padding: 6px 22px;
   border-radius: $radius-btn;
   box-shadow: $shadow-rest;
   transition: all $t-fast;
@@ -248,7 +277,7 @@ $t-mid: 220ms ease;
   color: $text-dim;
   font-size: 12px;
   font-weight: 600;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: $radius-btn;
   border: 1px solid transparent;
   transition: all $t-fast;
@@ -283,12 +312,12 @@ $t-mid: 220ms ease;
 }
 
 .weather-icon {
-  font-size: 42px;
+  font-size: 30px;
   color: $primary;
 }
 
 .weather-temp {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: #ffffff;
 }
@@ -304,14 +333,14 @@ $t-mid: 220ms ease;
 }
 
 .weather-days {
-  padding: 4px 0 0 0;
+  padding: 2px 0 0 0;
 }
 
 .day {
   background-color: $glass-tile;
   border: $border-faint;
   border-radius: $radius-widget;
-  padding: 8px 6px;
+  padding: 4px 6px;
 }
 
 .day-name {
@@ -321,13 +350,186 @@ $t-mid: 220ms ease;
 }
 
 .day-icon {
-  font-size: 16px;
+  font-size: 14px;
   color: $tertiary;
 }
 
-.day-temp {
+.day-hi {
+  font-size: 11px;
+  font-weight: 700;
+  color: $text-body;
+}
+
+.day-lo {
+  font-size: 11px;
+  color: $text-faint;
+}
+
+.day-precip {
+  font-size: 9px;
+  color: $text-dim;
+}
+
+.wx-hourly {
+  padding: 6px 0 0 0;
+}
+
+.hour-name {
+  font-size: 9px;
+  font-weight: 700;
+  color: $text-faint;
+}
+
+.hour-icon {
+  font-size: 13px;
+  color: $tertiary;
+}
+
+.hour-temp {
+  font-size: 10px;
+  color: $text-body;
+}
+
+// blurred album art fills the card behind a dark scrim baked into the image
+.np {
+  background-size: cover;
+  background-position: center;
+}
+
+.np-next {
+  font-size: 11px;
+  color: $text-dim;
+}
+
+.clip-row {
+  padding: 1px 6px;
+  border-radius: $radius-btn;
+  transition: background-color $t-fast;
+}
+
+.clip-row:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.clip-icon {
+  font-size: 12px;
+  color: $text-dim;
+}
+
+.clip-preview {
   font-size: 11px;
   color: $text-body;
+}
+
+.panel-sub {
+  background-color: $glass-tile;
+  border: $border-faint;
+  border-radius: $radius-widget;
+  padding: 8px 10px;
+}
+
+.panel-line {
+  font-size: 12px;
+  color: $text-body;
+}
+
+.panel-act {
+  padding: 2px 10px;
+  border-radius: $radius-btn;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: $border-subtle;
+  font-size: 11px;
+  font-weight: 600;
+  color: $text-dim;
+  transition: all $t-fast;
+}
+
+.panel-act:hover {
+  background-color: $hover-fill;
+  border: $border-glass;
+  color: #ffffff;
+}
+
+.chev {
+  min-width: 26px;
+  border-radius: $radius-btn;
+  font-size: 13px;
+  color: $text-dim;
+  transition: all $t-fast;
+}
+
+.chev:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.sink-row {
+  padding: 3px 8px;
+  border-radius: $radius-btn;
+  font-size: 12px;
+  color: $text-body;
+  transition: background-color $t-fast;
+}
+
+.sink-row:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.sink-row.default {
+  color: $primary;
+  font-weight: 600;
+}
+
+.notif-row {
+  padding: 1px 0;
+}
+
+.notif-icon {
+  font-size: 12px;
+  color: $primary;
+}
+
+.notif-app {
+  font-size: 11px;
+  font-weight: 700;
+  color: $text-dim;
+}
+
+.notif-summary {
+  font-size: 12px;
+  color: $text-body;
+}
+
+.notif-time {
+  font-size: 10px;
+  color: $text-faint;
+}
+
+// focus mode: the whole panel cools down while a focus session runs
+.dash-root.focus {
+  border: 1px solid rgba($primary, 0.35);
+  background: linear-gradient(160deg,
+      rgba($surface, 0.62) 0%,
+      rgba($surface-container-low, 0.5) 100%);
+}
+
+.cores {
+  padding: 2px 0 4px 0;
+}
+
+.core-name {
+  font-size: 9px;
+  color: $text-faint;
+}
+
+.core-bar trough {
+  min-width: 5px;
+  border-radius: 3px;
+}
+
+.core-bar trough progress {
+  min-width: 5px;
+  border-radius: 3px;
 }
 
 .art {
@@ -378,4 +580,222 @@ $t-mid: 220ms ease;
 .notif-count {
   font-size: 13px;
   color: $text-body;
+}
+
+.search-wrap {
+  background-color: $glass-card;
+  border: $border-subtle;
+  border-radius: $radius-widget;
+  padding: 4px 12px;
+}
+
+.search-icon {
+  font-size: 14px;
+  color: $text-dim;
+}
+
+.search-input {
+  background-color: transparent;
+  font-size: 13px;
+  color: #ffffff;
+  caret-color: $primary;
+}
+
+.ws-pill {
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: $radius-btn;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: $border-faint;
+  color: $text-faint;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all $t-fast;
+}
+
+.ws-pill.occupied {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: $border-subtle;
+  color: $text-body;
+}
+
+.ws-pill.active {
+  background-color: $primary;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: $on-primary;
+}
+
+.ws-pill:hover {
+  background-color: $hover-fill;
+  border: $border-glass;
+  color: #ffffff;
+}
+
+.action-btn {
+  min-width: 38px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: $radius-btn;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: $border-subtle;
+  color: $text-dim;
+  font-size: 14px;
+  transition: all $t-fast;
+}
+
+.action-btn:hover {
+  background-color: $hover-fill;
+  border: $border-glass;
+  color: #ffffff;
+}
+
+.action-btn.on {
+  background-color: rgba($error, 0.25);
+  border: 1px solid rgba($error, 0.5);
+  color: $error;
+}
+
+.banner {
+  background-color: rgba($error, 0.12);
+  border: 1px solid rgba($error, 0.35);
+  border-radius: $radius-card;
+  padding: 8px 14px;
+}
+
+.banner-chip {
+  font-size: 12px;
+  font-weight: 600;
+  color: $text-body;
+}
+
+.banner-chip.crit {
+  color: $error;
+}
+
+.banner-chip.warn {
+  color: $tertiary;
+}
+
+.banner-close {
+  padding: 0 4px;
+  font-size: 13px;
+  color: $text-dim;
+}
+
+.banner-close:hover {
+  color: #ffffff;
+}
+
+.sys-bar.warn trough progress {
+  background-color: $tertiary;
+}
+
+.sys-bar.crit trough progress {
+  background-color: $error;
+}
+
+.spark {
+  color: $primary;
+}
+
+.spark.warn {
+  color: $tertiary;
+}
+
+.spark.crit {
+  color: $error;
+}
+
+.spark.net {
+  color: $secondary;
+}
+
+.pomo-sessions {
+  font-size: 11px;
+  font-weight: 600;
+  color: $text-dim;
+}
+
+.pomo-phase-btn {
+  padding: 4px 14px;
+  border-radius: $radius-btn;
+  border: $border-faint;
+  background-color: rgba(255, 255, 255, 0.05);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: $text-dim;
+  transition: all $t-fast;
+}
+
+.pomo-phase-btn:hover {
+  background-color: $hover-fill;
+  border: $border-glass;
+  color: #ffffff;
+}
+
+.pomo-phase-btn.active {
+  background-color: rgba($primary, 0.2);
+  border: 1px solid rgba($primary, 0.45);
+  color: $primary;
+}
+
+.todo-empty {
+  font-size: 12px;
+  color: $text-faint;
+}
+
+.todo-check {
+  font-size: 15px;
+  color: $text-dim;
+  transition: color $t-fast;
+}
+
+.todo-check:hover {
+  color: $primary;
+}
+
+.todo-text {
+  font-size: 13px;
+  color: $text-body;
+}
+
+.todo-input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: $border-faint;
+  border-radius: $radius-btn;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: #ffffff;
+  caret-color: $primary;
+}
+
+.power-row {
+  padding: 2px 0 0 0;
+}
+
+.profile-btn {
+  padding: 3px 10px;
+  border-radius: $radius-btn;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: $border-subtle;
+  font-size: 11px;
+  font-weight: 600;
+  color: $text-dim;
+  transition: all $t-fast;
+}
+
+.profile-btn:hover {
+  background-color: $hover-fill;
+  border: $border-glass;
+  color: #ffffff;
+}
+
+.updates-row {
+  border-radius: $radius-btn;
+  transition: background-color $t-fast;
+}
+
+.updates-row:hover {
+  background-color: rgba(255, 255, 255, 0.06);
 }

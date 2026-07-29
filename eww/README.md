@@ -23,7 +23,7 @@ sudo pacman -S eww jq playerctl curl brightnessctl wireplumber networkmanager bl
 
 ## Usage
 
-Toggle with the Waybar clock or `SUPER + D` (`eww open --toggle dashboard`); `Escape` closes it via a layer-scoped bind in `hypr/hyprland/keybinds.lua`. The eww daemon autostarts from `hypr/hyprland/programs.lua`.
+Toggle with the Waybar clock or `SUPER + D`; both go through `hypr/scripts/dashboard.sh toggle`, which opens the dashboard on the *focused* monitor and recovers from orphaned eww daemons. Do not wire new triggers to `eww open --toggle dashboard` directly — that bypasses both and always lands on the laptop panel (`:monitor 0`). `Escape` closes it via a layer-scoped bind in `hypr/hyprland/keybinds.lua`. The eww daemon autostarts from `hypr/hyprland/programs.lua`.
 
 ## Layout
 

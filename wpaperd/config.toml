@@ -1,5 +1,5 @@
 [default]
-duration = "1h"
+duration = "30m"
 mode = "center"
 sorting = "ascending"
 

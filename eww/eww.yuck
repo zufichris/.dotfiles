@@ -1,23 +1,83 @@
-(defpoll time :interval "10s" "date '+%H:%M'")
+(defpoll clock :interval "10s" :initial "{\"h\":\"--\",\"m\":\"--\"}" "date '+{\"h\":\"%H\",\"m\":\"%M\"}'")
 (defpoll date :interval "60s" "date '+%A, %B %d'")
-(defpoll greeting :interval "300s" "h=$(date +%-H); if [ $h -lt 12 ]; then p='Good morning'; elif [ $h -lt 18 ]; then p='Good afternoon'; else p='Good evening'; fi; echo \"$p, $USER\"")
-(defpoll uptime :interval "60s" "uptime -p | sed 's/^up //'")
-(defpoll temp :interval "5s" :initial "0" "scripts/temp.sh")
-(defpoll volume :interval "2s" :initial "0" "scripts/volume.sh get")
-(defpoll brightness :interval "2s" :initial "0" "scripts/brightness.sh get")
-(defpoll music :interval "2s" :initial "{\"status\":\"Stopped\",\"artist\":\"\",\"title\":\"\",\"art\":\"placeholder.png\",\"pos_perc\":0,\"pos_str\":\"0:00\",\"len_str\":\"0:00\"}" "scripts/music.sh")
-(defpoll weather :interval "900s" :initial "{\"temp\":\"--°\",\"desc\":\"...\",\"hum\":\"--\",\"wind\":\"--\",\"icon\":\"󰖐\",\"days\":[]}" "scripts/weather.sh")
-(defpoll pomo :interval "1s" :initial "{\"time\":\"25:00\",\"perc\":0,\"running\":false,\"phase\":\"focus\"}" "scripts/pomodoro.sh status")
-(defpoll quick :interval "3s" :initial "{\"wifi\":true,\"bt\":false,\"dnd\":false,\"notifs\":0,\"caffeine\":false}" "scripts/quick.sh status")
-(defpoll updates :interval "1800s" :initial "0" "checkupdates 2>/dev/null | wc -l")
-(defpoll sys :interval "5s" :initial "{\"mem_str\":\"...\",\"mem_perc\":0,\"swap_str\":\"...\",\"swap_perc\":0,\"disk_str\":\"...\",\"disk_perc\":0}" "scripts/sysinfo.sh")
+(defpoll greeting :interval "300s" "h=$(date +%-H); if [ $h -lt 12 ]; then p='Good morning'; elif [ $h -lt 18 ]; then p='Good afternoon'; else p='Good evening'; fi; echo \"$p, $USER\" | tr '[:lower:]' '[:upper:]'")
+(defpoll uptime :interval "60s" "uptime -p | sed 's/^up //; s/ hours/h/; s/ hour/h/; s/ minutes/m/; s/ minute/m/; s/ days/d/; s/ day/d/; s/,//g'")
+(defpoll temp :interval "10s" :initial "0" "scripts/temp.sh")
+(defpoll volume :interval "3s" :initial "0" "scripts/volume.sh get")
+(defpoll brightness :interval "5s" :initial "0" "scripts/brightness.sh get")
+(defpoll music :interval "2s" :initial "{\"status\":\"Stopped\",\"artist\":\"\",\"title\":\"\",\"art\":\"placeholder.png\",\"art_blur\":\"\",\"next\":\"\",\"pos_perc\":0,\"pos_str\":\"0:00\",\"len_str\":\"0:00\"}" "scripts/music.sh")
+(defpoll weather :interval "900s" :initial "{\"temp\":\"--°\",\"desc\":\"...\",\"hum\":\"--\",\"wind\":\"--\",\"icon\":\"󰖐\",\"days\":[],\"hourly\":[]}" "scripts/weather.sh")
+(defpoll pomo :interval "1s" :initial "{\"time\":\"25:00\",\"perc\":0,\"running\":false,\"phase\":\"focus\",\"sessions\":0}" "scripts/pomodoro.sh status")
+(defpoll quick :interval "6s" :initial "{\"wifi\":true,\"bt\":false,\"dnd\":false,\"notifs\":0,\"caffeine\":false}" "scripts/quick.sh status")
+(defpoll updates :interval "600s" :initial "{\"count\":0,\"pkgs\":[],\"tip\":\"\"}" "scripts/updates.sh")
+(defpoll todo :interval "60s" :initial "{\"items\":[],\"total\":0}" "scripts/todo.sh list")
+(defpoll power :interval "20s" :initial "{\"batt\":100,\"charging\":true,\"time\":\"\",\"profile\":\"\",\"tier\":\"ok\"}" "scripts/power.sh status")
+(defpoll netif :interval "300s" :initial "lo" "scripts/netif.sh")
+(defpoll sys :interval "10s" :initial "{\"mem_str\":\"...\",\"mem_perc\":0,\"swap_str\":\"...\",\"swap_perc\":0,\"disk_str\":\"...\",\"disk_perc\":0}" "scripts/sysinfo.sh")
+(defpoll recordv :interval "5s" :initial "{\"recording\":false,\"elapsed\":\"\"}" "scripts/capture.sh status")
+(defpoll clips :interval "30s" :initial "[]" "scripts/clip.sh list")
 
-(defwidget sysbar [label value text]
-  (box :class "sys-row" :orientation "v" :space-evenly false :spacing 4
+(deflisten wsjson :initial "[]" "scripts/workspaces.sh listen")
+(deflisten notifs :initial "[]" "scripts/notif-log.sh listen")
+
+(defvar search_q "")
+(defvar todo_q "")
+(defvar banner_dismissed false)
+(defvar net_open false)
+(defvar bt_open false)
+(defvar sink_open false)
+(defvar wx_hourly false)
+(defvar sys_cores false)
+(defvar net_info "{\"ssid\":\"\",\"signal\":0,\"vpn\":\"\",\"ip\":\"\"}")
+(defvar bt_devices "[]")
+(defvar sinks "[]")
+
+(defwidget banner []
+  (revealer :transition "slidedown" :duration "200ms"
+            :reveal {!banner_dismissed && (temp >= 90 || sys.disk_perc >= 90 || recordv.recording || power.tier == "crit")}
+    (box :class "banner" :space-evenly false :spacing 10
+      (label :class "banner-chip crit" :visible {power.tier == "crit"}
+             :text "󰂃 Battery at ${power.batt}%${power.time != "" ? ", " + power.time + " left" : ""}")
+      (label :class "banner-chip crit" :visible {temp >= 90} :text "󰈸 CPU at ${temp}°C")
+      (label :class "banner-chip warn" :visible {sys.disk_perc >= 90} :text "󰋊 Disk almost full: ${sys.disk_str}")
+      (label :class "banner-chip" :visible {recordv.recording} :text "󰑊 Recording ${recordv.elapsed}")
+      (button :class "banner-close" :hexpand true :halign "end"
+              :onclick "eww update banner_dismissed=true" "󰅖"))))
+
+(defwidget topbar []
+  (box :class "topbar" :space-evenly false :spacing 12
+    (box :class "search-wrap" :hexpand true :space-evenly false :spacing 8
+      (label :class "search-icon" :text "󰍉")
+      ;; no :onchange here: a per-keystroke `eww update` round-trips through the
+      ;; daemon and times out under load. :onaccept already receives the text.
+      (input :class "search-input" :hexpand true :value search_q
+             :onaccept "scripts/search-launch.sh {}"))
+    (box :class "ws-row" :space-evenly false :spacing 6
+      (for ws in wsjson
+        (button :class "ws-pill ${ws.active ? 'active' : ''} ${ws.occupied ? 'occupied' : ''}"
+                :onclick "hyprctl dispatch 'hl.dsp.focus({workspace=${ws.id}})'"
+                "${ws.id}")))
+    (box :class "actions" :space-evenly false :spacing 6
+      (button :class "action-btn ${recordv.recording ? 'on' : ''}"
+              :onclick "scripts/capture.sh toggle"
+              {recordv.recording ? "󰑊 ${recordv.elapsed}" : "󰑊"})
+      (button :class "action-btn" :onclick "scripts/capture.sh shot-region" "󰄀")
+      (button :class "action-btn" :onclick "~/.config/hypr/scripts/wallpaper-random.sh" "󰸉"))))
+
+(defwidget sysbar [label value text tiered]
+  (box :class "sys-row" :orientation "v" :space-evenly false :spacing 2
     (box :space-evenly false
       (label :class "sys-label" :halign "start" :hexpand true :text label)
       (label :class "sys-value" :halign "end" :text text))
-    (progress :class "sys-bar" :value value)))
+    (progress :class "sys-bar ${tiered ? (value > 80 ? "crit" : value >= 60 ? "warn" : "") : ""}" :value value)))
+
+(defwidget sparkrow [label text value tier]
+  (box :class "sys-row" :orientation "v" :space-evenly false :spacing 2
+    (box :space-evenly false
+      (label :class "sys-label" :halign "start" :hexpand true :text label)
+      (label :class "sys-value" :halign "end" :text text))
+    (graph :class "spark ${tier}" :value value :time-range "60s" :min 0 :max 101
+           :thickness 2 :height 14 :line-style "round")))
 
 (defwidget toggle [icon action state]
   (button :class "toggle ${state ? 'on' : ''}" :onclick action
@@ -33,55 +93,150 @@
            :onchange command)))
 
 (defwidget dashboard []
-  (box :class "dash-root" :orientation "h" :space-evenly true :spacing 12
+  (box :class "dash-root ${pomo.running && pomo.phase == "focus" ? "focus" : ""}"
+       :orientation "v" :space-evenly false :spacing 6
+   (banner)
+   (topbar)
+   (box :orientation "h" :space-evenly true :spacing 12
     (box :orientation "v" :space-evenly false :spacing 10
-      (box :class "card" :orientation "v" :space-evenly false :spacing 4
-        (label :class "greet-title" :halign "start" :text greeting :limit-width 28)
-        (label :class "greet-sub" :halign "start" :text "up ${uptime}" :limit-width 34))
-      (box :class "card" :orientation "v" :space-evenly false :spacing 2
-        (label :class "time" :halign "start" :text time)
-        (label :class "date" :halign "start" :text date))
-      (box :class "card" :orientation "v" :space-evenly false :spacing 12
+      (box :class "card clock-card" :orientation "v" :space-evenly false :spacing 6
+        (box :space-evenly false :spacing 8
+          (label :class "greet" :halign "start" :show-truncated false :text greeting)
+          (box :hexpand true)
+          (box :class "uptime-chip" :space-evenly false :spacing 6 :valign "center"
+            (label :class "uptime-label" :text "UPTIME")
+            (label :class "uptime-text" :text uptime)))
+        (box :space-evenly false :spacing 0
+          (label :class "time" :text {clock.h})
+          (label :class "time-sep" :text ":")
+          (label :class "time" :text {clock.m})
+          (label :class "date" :hexpand true :halign "end" :valign "end" :text date)))
+      (box :class "card" :orientation "v" :space-evenly false :spacing 8
         (label :class "card-title" :halign "start" :text "QUICK SETTINGS")
         (box :halign "start" :space-evenly false :spacing 10
-          (toggle :icon "󰤨" :action "scripts/quick.sh wifi" :state {quick.wifi})
-          (toggle :icon "󰂯" :action "scripts/quick.sh bt" :state {quick.bt})
+          (button :class "toggle ${quick.wifi ? 'on' : ''}"
+                  :onclick "eww update net_info=\"$(scripts/net-detail.sh)\" net_open=${!net_open} bt_open=false sink_open=false"
+                  (label :text "󰤨"))
+          (button :class "toggle ${quick.bt ? 'on' : ''}"
+                  :onclick "scripts/quick.sh bt"
+                  :onrightclick "eww update bt_devices=\"$(scripts/bt.sh list)\" bt_open=${!bt_open} net_open=false sink_open=false"
+                  (label :text "󰂯"))
           (toggle :icon "󰂛" :action "scripts/quick.sh dnd" :state {quick.dnd})
           (toggle :icon "󰅶" :action "scripts/quick.sh caffeine" :state {quick.caffeine})
           (button :class "toggle" :onclick "swaync-client -t" (label :text "󰂚")))
-        (slider :icon "󰕾" :value volume     :command "scripts/volume.sh set {}")
-        (slider :icon "󰃟" :value brightness :command "scripts/brightness.sh set {}"))
-      (box :class "card" :orientation "v" :space-evenly false :spacing 8 :vexpand true
+        (revealer :transition "slidedown" :duration "200ms" :reveal net_open
+          (box :class "panel-sub" :orientation "v" :space-evenly false :spacing 4
+            (box :space-evenly false :spacing 8
+              (label :class "panel-line" :hexpand true :halign "start"
+                     :text "󰤨 ${net_info.ssid == '' ? 'Not connected' : net_info.ssid}${net_info.signal > 0 ? '  ' + net_info.signal + '%' : ''}")
+              (button :class "panel-act" :onclick "scripts/quick.sh wifi" {quick.wifi ? "Turn off" : "Turn on"}))
+            (label :class "panel-line" :halign "start" :text "󰦝 VPN: ${net_info.vpn == '' ? 'off' : net_info.vpn}")
+            (label :class "panel-line" :visible {net_info.ip != ""} :halign "start" :text "󰩟 ${net_info.ip}")))
+        (revealer :transition "slidedown" :duration "200ms" :reveal bt_open
+          (box :class "panel-sub" :orientation "v" :space-evenly false :spacing 4
+            (label :class "panel-line" :visible {arraylength(bt_devices) == 0} :halign "start" :text "No paired devices")
+            (for d in bt_devices
+              (box :space-evenly false :spacing 8
+                (label :class "panel-line" :hexpand true :halign "start" :text {d.name} :limit-width 20)
+                (label :class "panel-line" :visible {d.battery >= 0} :text "󰥉 ${d.battery}%")
+                (button :class "panel-act"
+                        :onclick "scripts/bt.sh ${d.connected ? 'disconnect' : 'connect'} ${d.mac}; eww update bt_devices=\"$(scripts/bt.sh list)\""
+                        {d.connected ? "󰂲" : "󰂱"})))))
+        (box :space-evenly false :spacing 6
+          ;; drag fires this per motion event, so call the tool directly rather
+          ;; than paying for an extra shell + script spawn each time
+          (box :hexpand true (slider :icon "󰕾" :value volume :command "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ {}%"))
+          (button :class "chev" :onclick "eww update sinks=\"$(scripts/sinks.sh list)\" sink_open=${!sink_open} net_open=false bt_open=false" "󰓃"))
+        (revealer :transition "slidedown" :duration "200ms" :reveal sink_open
+          (box :class "panel-sub" :orientation "v" :space-evenly false :spacing 2
+            (for s in sinks
+              (button :class "sink-row ${s.default ? 'default' : ''}"
+                      :onclick "scripts/sinks.sh set ${s.id}; eww update sinks=\"$(scripts/sinks.sh list)\""
+                (label :halign "start" :text "${s.default ? '󰄬 ' : ''}${s.name}" :limit-width 32)))))
+        (slider :icon "󰃟" :value brightness :command "brightnessctl -q set {}%"))
+      (box :class "card" :orientation "v" :space-evenly false :spacing 8
         (label :class "card-title" :halign "start" :text "CALENDAR")
         (calendar :class "cal")))
     (box :orientation "v" :space-evenly false :spacing 10
-      (box :class "card pomo" :orientation "v" :space-evenly false :spacing 10 :vexpand true
-        (label :class "card-title" :halign "start" :text "POMODORO")
-        (box :vexpand true :valign "center" :halign "center"
+      (box :class "card pomo" :orientation "v" :space-evenly false :spacing 8
+        (box :space-evenly false
+          (label :class "card-title" :halign "start" :hexpand true :text "POMODORO")
+          (label :class "pomo-sessions" :halign "end" :text "󰄉 ${pomo.sessions} today"))
+        (box :halign "center"
           (overlay
-            (circular-progress :class "pomo-track" :value 100 :thickness 8 :start-at 75
-                               :width 205 :height 205)
-            (circular-progress :class "pomo-ring ${pomo.phase}" :value {pomo.perc} :thickness 8 :start-at 75
-                               :width 205 :height 205)
+            (circular-progress :class "pomo-track" :value 100 :thickness 6 :start-at 75
+                               :width 100 :height 100)
+            (circular-progress :class "pomo-ring ${pomo.phase}" :value {pomo.perc} :thickness 6 :start-at 75
+                               :width 100 :height 100)
             (box :orientation "v" :space-evenly false :valign "center" :halign "center"
               (label :class "pomo-time" :text {pomo.time})
               (label :class "pomo-sub ${pomo.phase}" :text {pomo.phase == "break" ? "BREAK" : "FOCUS"}))))
-        (box :halign "center" :space-evenly false :spacing 12
+        (box :halign "center" :space-evenly false :spacing 8
+          (button :class "pomo-phase-btn ${pomo.phase == "focus" ? "active" : ""}" :visible {!pomo.running}
+                  :onclick "scripts/pomodoro.sh phase focus" "FOCUS")
+          (button :class "pomo-phase-btn ${pomo.phase == "break" ? "active" : ""}" :visible {!pomo.running}
+                  :onclick "scripts/pomodoro.sh phase break" "BREAK")
           (button :class "btn-primary" :onclick "scripts/pomodoro.sh toggle"
             {pomo.running ? "Pause" : "Start"})
           (button :class "btn-ghost" :onclick "scripts/pomodoro.sh reset" "Reset")))
-      (box :class "card" :orientation "v" :space-evenly false :spacing 10
+      (box :class "card" :orientation "v" :space-evenly false :spacing 8
+        (box :space-evenly false
+          (label :class "card-title" :halign "start" :hexpand true :text "TASKS")
+          (label :class "card-date" :halign "end" :text "${todo.total} open"))
+        (label :class "todo-empty" :visible {arraylength(todo.items) == 0} :halign "start"
+               :text "Nothing captured yet")
+        (box :orientation "v" :space-evenly false :spacing 4
+          (for t in {todo.items}
+            (box :class "todo-row" :space-evenly false :spacing 8
+              (button :class "todo-check" :onclick "eww update todo=\"$(scripts/todo.sh check ${t.line})\"" "󰄰")
+              (label :class "todo-text" :hexpand true :halign "start" :text {t.text} :limit-width 28))))
+        (input :class "todo-input" :value todo_q
+               :onaccept "eww update todo=\"$(scripts/todo.sh add {})\" todo_q=''"))
+      (eventbox :onhover "eww update sys_cores=true" :onhoverlost "eww update sys_cores=false"
+       (box :class "card" :orientation "v" :space-evenly false :spacing 4
         (label :class "card-title" :halign "start" :text "SYSTEM")
-        (sysbar :label "CPU"    :value {round(EWW_CPU.avg, 0)} :text "${round(EWW_CPU.avg, 0)}%")
-        (sysbar :label "Memory" :value {sys.mem_perc}  :text {sys.mem_str})
-        (sysbar :label "Swap"   :value {sys.swap_perc} :text {sys.swap_str})
-        (sysbar :label "Disk (/)" :value {sys.disk_perc} :text {sys.disk_str})
-        (sysbar :label "Temp"   :value temp :text "${temp}°C")
-        (box :space-evenly false :class "sys-row"
-          (label :class "sys-label" :halign "start" :hexpand true :text "Updates")
-          (label :class "sys-value" :halign "end" :text "${updates} pending"))))
-    (box :orientation "v" :space-evenly false :spacing 10
-      (box :class "card" :orientation "v" :space-evenly false :spacing 12
+        (sysbar :label "CPU" :value {round(EWW_CPU.avg, 0)} :text "${round(EWW_CPU.avg, 0)}%" :tiered true)
+        (sysbar :label "Memory" :value {sys.mem_perc}  :text {sys.mem_str} :tiered false)
+        (box :visible {sys.swap_str != "none"}
+          (sysbar :label "Swap" :value {sys.swap_perc} :text {sys.swap_str} :tiered false))
+        (sysbar :label "Disk (/)" :value {sys.disk_perc} :text {sys.disk_str} :tiered true)
+        (sysbar :label "Temp" :value temp :text "${temp}°C" :tiered true)
+        (box :class "sys-row" :space-evenly false
+          (label :class "sys-label" :halign "start" :hexpand true :text "Network")
+          (label :class "sys-value" :halign "end"
+                 :text "󰇚 ${round((EWW_NET[netif]?.NET_DOWN ?: 0) / 2048, 0)} KB/s  󰕒 ${round((EWW_NET[netif]?.NET_UP ?: 0) / 2048, 0)} KB/s"))
+        ;; graphs redraw every frame to scroll their time window, and each
+        ;; repaint forces the compositor to re-blur this layer. Keep them (and
+        ;; the per-core bars) inside the hover revealer so they cost nothing
+        ;; while the card is at rest.
+        (revealer :transition "slidedown" :duration "200ms" :reveal sys_cores
+          (box :class "sys-detail" :orientation "v" :space-evenly false :spacing 6
+            (box :class "cores" :space-evenly true :spacing 6
+              (for c in {EWW_CPU.cores}
+                (box :orientation "v" :space-evenly false :spacing 2
+                  (label :class "core-name" :text {replace(c.core, "cpu", "")})
+                  (progress :class "sys-bar core-bar ${c.usage > 80 ? "crit" : c.usage >= 60 ? "warn" : ""}"
+                            :orientation "v" :flipped true :value {c.usage} :height 26))))
+            (sparkrow :label "CPU 60s" :text "${round(EWW_CPU.avg, 0)}%" :value {round(EWW_CPU.avg, 0)}
+                      :tier {EWW_CPU.avg > 80 ? "crit" : EWW_CPU.avg >= 60 ? "warn" : ""})
+            (sparkrow :label "Temp 60s" :text "${temp}°C" :value temp
+                      :tier {temp > 80 ? "crit" : temp >= 60 ? "warn" : ""})
+            (graph :class "spark net" :value {(EWW_NET[netif]?.NET_DOWN ?: 0) / 2048} :time-range "60s"
+                   :min 0 :dynamic true :thickness 2 :height 14 :line-style "round")))
+        (box :class "sys-row power-row" :space-evenly false :spacing 8
+          (label :class "sys-label" :halign "start" :hexpand true
+                 :text "${power.charging ? "󰂄" : power.batt <= 15 ? "󰁺" : power.batt <= 40 ? "󰁽" : power.batt <= 70 ? "󰂀" : "󰁹"} ${power.batt}%${power.time != "" ? ", " + power.time : ""}")
+          (button :class "profile-btn" :visible {power.profile != ""}
+                  :onclick "scripts/power.sh cycle && eww update power=\"$(scripts/power.sh status)\""
+                  "${power.profile == "performance" ? "󰓅" : power.profile == "power-saver" ? "󰾆" : "󰾅"} ${power.profile}"))
+        (button :class "updates-row" :tooltip {updates.tip}
+                :onclick "setsid -f kitty -e sudo pacman -Syu >/dev/null 2>&1"
+          (box :space-evenly false :class "sys-row"
+            (label :class "sys-label" :halign "start" :hexpand true :text "Updates")
+            (label :class "sys-value" :halign "end" :text "${updates.count} pending"))))))
+    (box :orientation "v" :space-evenly false :spacing 8
+      (eventbox :onhover "eww update wx_hourly=true" :onhoverlost "eww update wx_hourly=false"
+       (box :class "card" :orientation "v" :space-evenly false :spacing 6
         (box :space-evenly false (label :class "card-title" :halign "start" :hexpand true :text "WEATHER") (label :class "card-date" :halign "end" :text date))
         (box :space-evenly false :spacing 14
           (label :class "weather-icon" :text {weather.icon})
@@ -96,8 +251,19 @@
             (box :class "day" :orientation "v" :space-evenly false :spacing 2
               (label :class "day-name" :text {day.d})
               (label :class "day-icon" :text {day.i})
-              (label :class "day-temp" :text {day.t})))))
-      (box :class "card" :orientation "v" :space-evenly false :spacing 10 :vexpand true
+              (box :halign "center" :space-evenly false :spacing 4
+                (label :class "day-hi" :text {day.hi})
+                (label :class "day-lo" :text {day.lo}))
+              (label :class "day-precip" :visible {day.p > 0} :text "󰖌 ${day.p}%"))))
+        (revealer :transition "slidedown" :duration "200ms" :reveal wx_hourly
+          (box :class "wx-hourly" :space-evenly true :spacing 4
+            (for h in {weather.hourly}
+              (box :class "hour" :orientation "v" :space-evenly false :spacing 1
+                (label :class "hour-name" :text {h.h})
+                (label :class "hour-icon" :text {h.i})
+                (label :class "hour-temp" :text {h.t})))))))
+      (box :class "card np" :orientation "v" :space-evenly false :spacing 10 :vexpand true
+           :style "background-image: url('${music.art_blur}');"
         (label :class "card-title" :halign "start" :text "NOW PLAYING")
         (box :orientation "v" :space-evenly false :spacing 10 :vexpand true :valign "center"
         (box :space-evenly false :spacing 12
@@ -119,17 +285,41 @@
           (button :class "music-btn" :onclick "playerctl previous" "󰒮")
           (button :class "music-btn play" :onclick "playerctl play-pause"
                   {music.status == "Playing" ? "󰏤" : "󰐊"})
-          (button :class "music-btn" :onclick "playerctl next" "󰒭"))))
-      (box :class "card" :space-evenly false :spacing 10
-        (button :class "toggle" :onclick "swaync-client -t" (label :text "󰂚"))
-        (label :class "notif-count" :hexpand true
-               :text "${quick.notifs} notification${quick.notifs == 1 ? '' : 's'}")
-        (button :class "btn-ghost" :onclick "swaync-client -C" "Clear")))))
+          (button :class "music-btn" :onclick "playerctl next" "󰒭"))
+        (label :class "np-next" :visible {music.next != ""} :halign "center"
+               :text "Next: ${music.next}" :limit-width 34)))
+      (box :class "card" :orientation "v" :space-evenly false :spacing 4
+        (label :class "card-title" :halign "start" :text "CLIPBOARD")
+        (label :class "todo-empty" :visible {arraylength(clips) == 0} :halign "start" :text "History empty")
+        (box :orientation "v" :space-evenly false :spacing 2
+          (for c in clips
+            (button :class "clip-row" :onclick "scripts/clip.sh copy ${c.id}"
+              (box :space-evenly false :spacing 8
+                (label :class "clip-icon" :text {c.img ? "󰋩" : "󰅍"})
+                (label :class "clip-preview" :hexpand true :halign "start" :text {c.preview} :limit-width 34))))))
+      (box :class "card" :orientation "v" :space-evenly false :spacing 4
+        (box :space-evenly false :spacing 8
+          (label :class "card-title" :halign "start" :hexpand true :text "NOTIFICATIONS")
+          (label :class "notif-time" :visible {quick.notifs > 0} :text "${quick.notifs} active")
+          (button :class "btn-ghost" :onclick "scripts/notif-log.sh clear; swaync-client -C" "Clear"))
+        (label :class "todo-empty" :visible {arraylength(notifs) == 0} :halign "start" :text "All caught up")
+        (box :orientation "v" :space-evenly false :spacing 1
+          (for n in notifs
+            (box :class "notif-row" :space-evenly false :spacing 8
+              (label :class "notif-icon" :text {n.icon})
+              (label :class "notif-app" :text {n.app} :limit-width 12)
+              (label :class "notif-summary" :hexpand true :halign "start" :text {n.summary} :limit-width 26)
+              (label :class "notif-time" :halign "end" :text {n.time})))))))))
 
 (defwindow dashboard
   :monitor 0
   :namespace "eww-dashboard"
-  :geometry (geometry :y "12px" :anchor "top center" :width "94%")
+  ;; Fixed width, not a percentage: at 94% the dashboard stretched to 2406px on
+  ;; a 2560-wide external monitor. 1200px matches how it renders on the laptop
+  ;; (1203px there) and centers on anything wider. Keep it <= the narrowest
+  ;; monitor's LOGICAL width (eDP-1 is 1280 at scale 1.5) or it will overflow.
+  :geometry (geometry :y "12px" :anchor "top center" :width "1200px")
   :stacking "overlay"
   :exclusive false
+  :focusable true
   (dashboard))
